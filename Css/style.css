@@ -1,32 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-    --bg-color:#071433;
-    --paper:#F3E9D7;
-    --accent:#D9773B;
-    --accent2:#8B1E3F;
-    --navy:#071433;        /* fondo oscuro */
-    --navy-mid:#0b2b44;    /* contraste más claro */
-    --warm-edge:#c99b78;   /* borde cálido visible */
-    --paper:#F3E9D7;  
+  --bg-color:#071433;
+  --paper:#F3E9D7;
+  --accent:#D9773B;
+  --accent2:#8B1E3F;
+  --navy:#071433;        /* fondo oscuro */
+  --navy-mid:#0b2b44;    /* contraste más claro */
+  --warm-edge:#c99b78;   /* borde cálido visible */
+  --paper:#F3E9D7;  
   /* Familias tipográficas */
   --fuente-primaria: 'Inter', sans-serif;
   --fuente-secundaria: 'Poppins', sans-serif;
   --fuente-monoespaciada: 'JetBrains Mono', monospace;
 
-    --titulo: #f8fafc;
-    --subtitulo: #e2e8f0;
-    --texto-principal: #e2e8f0;
-    --texto-secundario: #94a3b8;
+  --titulo: #f8fafc;
+  --subtitulo: #e2e8f0;
+  --texto-principal: #e2e8f0;
+  --texto-secundario: #94a3b8;
     
-    --fondo-primario: #0f172a;
-    --fondo-secundario: #1e293b;
-    --fondo-oscuro: #020617;
-    --fondo-tarjeta: #1e293b;
-    --fondo-hover: #0c4a6e;
-
-    --borde-color: #334155;
-    --borde-frio: #0369a1;
+  --fondo-primario: #0f172a;
+  --fondo-secundario: #1e293b;
+  --fondo-oscuro: #020617;
+  --fondo-tarjeta: #1e293b;
+  --fondo-hover: #0c4a6e;
+  --borde-color: #334155;
+  --borde-frio: #0369a1;
 
   /* Tamaños de fuente */
   --h1: 2.5rem;
@@ -57,8 +56,8 @@
 }
 
 *{
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body{
@@ -86,6 +85,53 @@ header h1{
   font-family: var(--fuente-primaria);
   color: var(--titulo);
 }
+
+
+.navbar {
+  width: 250px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  height: 100vh;
+  padding: 20px 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-header {
+  padding: 0 20px 30px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
+}
+
+.navbar-header h3 {
+  color: var(--texto-principal);
+  font-size: var(--h3);
+}
+
+.navbar ul {
+  list-style: none;
+}
+
+.navbar li {
+  margin: 10px 0;
+}
+
+.navbar a {
+  display: block;
+  padding: 15px 20px;
+  color: var(--texto-principal);
+  text-decoration: none;
+  transition: 0.3s;
+  border-left: 4px solid transparent;
+}
+
+.navbar a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-left-color: var(--borde-frio);
+  padding-left: 25px;
+}
+
 main {
   width: 100%;
   margin: 2rem;
@@ -139,6 +185,8 @@ main button{
   background-color: var(--fondo-secundario);
   border-radius: 15px;
   border-style: none;
+  font-weight: var(--peso-bold);
+  color: var(--texto-principal);
   box-shadow: 0px 0px 10px white;
 }
 main button a{
@@ -173,7 +221,7 @@ form img{
 }
 
 
-form label{
+form label {
   margin-top: 1rem;
   font-size: var(--h4);
   color: var(--texto-secundario);
@@ -182,7 +230,7 @@ form label{
   display: flex;
 }
 
-form input {
+form input, select {
   padding: 12px;
   border: 2px solid var(--paper);
   border-radius: 6px;
@@ -214,4 +262,11 @@ form button {
 form button:hover {
   background: #764ba2;
   transform: translateY(-2px);
+}
+
+.register-vehicle{
+  padding-top: 2rem;
+  height: auto;
+  padding-bottom: 3rem;
+  box-shadow: none;
 }

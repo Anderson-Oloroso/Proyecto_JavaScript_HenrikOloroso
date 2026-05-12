@@ -270,3 +270,9 @@ form button:hover {
   padding-bottom: 3rem;
   box-shadow: none;
 }
+
+.register-vehicle-type{
+  height: auto;
+  box-shadow: none;
+  padding: 3rem 2rem 3rem 2rem;
+}

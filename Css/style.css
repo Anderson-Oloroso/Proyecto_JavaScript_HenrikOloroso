@@ -276,3 +276,19 @@ form button:hover {
   box-shadow: none;
   padding: 3rem 2rem 3rem 2rem;
 }
+
+.croquis{
+  flex-grow: 1; /* Esto hace que el main ocupe todo el ancho sobrante */
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap:1rem;
+  flex-flow: row wrap;
+  margin: 3rem 3rem auto 15rem;
+}
+
+.croquis div{
+  width: 15rem;
+  height: 10rem;
+  background-color: #667eea;
+}

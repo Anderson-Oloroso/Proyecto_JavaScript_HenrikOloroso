@@ -58,6 +58,7 @@
 *{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body{
@@ -278,17 +279,21 @@ form button:hover {
 }
 
 .croquis{
-  flex-grow: 1; /* Esto hace que el main ocupe todo el ancho sobrante */
-  width: 100%;
+  flex-grow: 1;
+  width: calc(100% - 250px);
   height: auto;
   display: flex;
-  gap:1rem;
+  gap: 1rem;
   flex-flow: row wrap;
-  margin: 3rem 3rem auto 15rem;
+  margin: 3rem 3rem 3rem 0;
+  margin-left: 250px;
 }
 
 .croquis div{
-  width: 15rem;
+  width: 14.5rem;
   height: 10rem;
   background-color: #667eea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

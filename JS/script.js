@@ -90,6 +90,31 @@ function cargarTabla() {
 
 cargarTabla()
 
-function registerVehicle(){
+function obtenerHoraActual() {
+  const ahora = new Date();
+  let horas = ahora.getHours();
+  const minutos = String(ahora.getMinutes()).padStart(2, '0');
+  const ampm = horas >= 12 ? 'AM' : 'PM';
   
+  horas = horas % 12;
+  horas = horas ? horas : 12; 
+  const horasStr = String(horas).padStart(2, '0');
+  
+  return `${horasStr}:${minutos} ${ampm}`;
+}
+
+function registerVehicle(){
+  const cod = document.getElementById("code")
+  const name = document.getElementById("nombre")
+  const tarifa = document.getElementById("tarifa")
+  let currentHour = obtenerHoraActual()
+
+  registerV = [
+    {
+      codigo:cod,
+      nombre:name,
+      tarifa:tarifa,
+      hora: currentHour
+    }
+  ]
 }

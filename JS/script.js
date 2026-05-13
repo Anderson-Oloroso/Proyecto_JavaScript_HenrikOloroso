@@ -35,5 +35,61 @@ const submit = document.getElementById("btn-login")
 submit.addEventListener("click", ()=>{
   const user = document.getElementById("email").value
   const pwd = document.getElementById("password").value
-  logIn(user, pwd)
+  const p = document.getElementById("messege")
+  p.style = "margin-top: 1rem"
+  p.textContent = "Validando información por favor espere ..."
+  setTimeout(()=>{
+    logIn(user, pwd)
+    p.textContent = ''
+  },3000)
+  
 })
+
+
+const registrosParqueo = [
+  { 
+    placa: "P-452DFG", 
+    tipoVehiculo: "Sedán",       
+    fecha: "13/05/2026", 
+    horaEntrada: "08:15 AM", 
+    slot: "A-12" 
+  },
+  { 
+    placa: "M-891KLP", 
+    tipoVehiculo: "Motocicleta", 
+    fecha: "13/05/2026", 
+    horaEntrada: "08:30 AM", 
+    slot: "M-03" 
+  },
+  { 
+    placa: "C-231QWE", 
+    tipoVehiculo: "Camioneta",  
+    fecha: "13/05/2026", 
+    horaEntrada: "08:34 AM", 
+    slot: "B-05" 
+  }
+];
+
+const tablaBody = document.getElementById('tabla-registros');
+
+function cargarTabla() {
+  tablaBody.innerHTML = "";
+  registrosParqueo.forEach(registro => {
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+      <td><span class="placa">${registro.placa}</span></td>
+      <td class="tipo-auto">${registro.tipoVehiculo}</td>
+      <td class="hora">${registro.fecha}</td>
+      <td class="hora">${registro.horaEntrada}</td>
+      <td><span class="tarifa">${registro.slot}</span></td>
+    `;
+
+    tablaBody.appendChild(fila);
+  });
+}
+
+cargarTabla()
+
+function registerVehicle(){
+  
+}

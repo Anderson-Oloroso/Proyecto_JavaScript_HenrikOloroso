@@ -71,6 +71,7 @@ body{
   text-align: center;
   justify-content: center;
   flex-flow: column wrap;
+  overflow-x: hidden;
 }
 header{
   width: 100%;
@@ -296,4 +297,85 @@ form button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.record-vehicles, .record-types{
+  width: calc(100% - 300px); 
+  margin-left: 5rem;      
+  margin-right: auto;
+  height: auto;
+  display: flex;
+  flex-flow: column wrap;
+}
+.table-container {
+  width: 90%;            
+  max-width: 1400px;    
+  margin: 40px auto;    
+  background-color: var(--navy-mid);
+  border-radius: 12px;
+  border: 1px solid var(--borde-color);
+  box-shadow: 0 10px 25px -5px rgba(2, 6, 23, 0.5);
+  overflow-x: auto;     
+}
+table {
+  width: 100%;           /* Ocupa todo el espacio interno del contenedor */
+  border-collapse: collapse;
+  font-family: var(--fuente-primaria);
+  text-align: left;      /* Mantiene los textos alineados ordenadamente */
+}
+th {
+  background-color: var(--navy);
+  color: var(--titulo);
+  font-family: var(--fuente-secundaria);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  padding: 18px 24px;
+  border-bottom: 2px solid var(--warm-edge); 
+}
+th:first-child { border-top-left-radius: 12px; }
+th:last-child { border-top-right-radius: 12px; }
+td {
+  padding: 16px 24px;
+  color: var(--texto-principal);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-compacta);
+  border-bottom: 1px solid var(--borde-color);
+  transition: background-color 0.2s ease;
+}
+tbody tr:nth-child(even) {
+  background-color: rgba(2, 6, 23, 0.2); 
+}
+tbody tr:hover {
+  background-color: var(--fondo-hover);
+}
+.placa {
+  font-family: var(--fuente-monoespaciada);
+  font-weight: var(--peso-bold);
+  color: var(--paper); 
+  background-color: var(--fondo-secundario);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--warm-edge);
+  display: inline-block;
+  letter-spacing: var(--tracking-wide);
+}
+.tipo-auto {
+  font-weight: var(--peso-medio);
+  color: var(--subtitulo);
+}
+.hora {
+  color: var(--texto-secundario);
+  font-size: var(--texto-sm);
+}
+.tarifa {
+  font-family: var(--fuente-secundaria);
+  font-weight: var(--peso-bold);
+  color: var(--accent);
+  font-size: var(--texto-lg);
+  text-shadow: 0 2px 4px rgba(139, 30, 63, 0.2);
+}
+tbody tr:last-child td {
+  border-bottom: none;
 }

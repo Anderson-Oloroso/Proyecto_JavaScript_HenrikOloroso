@@ -28,7 +28,7 @@
         </nav>
     </header>
     <main>
-        <form action="submit" method="post" class="register-vehicle-type">
+        <form id="register-vehicle-type">
             <img src="https://cdn-icons-png.flaticon.com/128/768/768869.png" alt="Camión">
             <h2>Crear Tipo de Vehículo</h2>
             
@@ -38,10 +38,10 @@
             <label for="nombre">Nombre del Tipo</label>
             <input type="text" id="nombre" name="nombre" placeholder="Ej: Camión" required>
             
-            <label for="precio">Tarifa por Hora ($)</label>
+            <label for="precio">Tarifa por Hora (Q)</label>
             <input type="number" id="precio" name="precio" placeholder="Ej: 50" step="0.01" min="0" required>
             
-            <button type="submit" id="btn-crear">Crear Tipo de Vehículo</button>
+            <button type="submit" id="btn-type">Crear Tipo de Vehículo</button>
         </form>
 
     </main>

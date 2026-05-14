@@ -55,7 +55,7 @@ function obtenerHoraActual() {
   const ahora = new Date() 
   let horas = ahora.getHours() 
   const minutos = String(ahora.getMinutes()).padStart(2, '0') 
-  const ampm = horas >= 12 ? 'AM' : 'PM' 
+  const ampm = horas >= 12 ? 'PM' : 'AM' 
   
   horas = horas % 12 
   horas = horas ? horas : 12  
@@ -88,10 +88,7 @@ function registrarEntrada() {
     slot: slot,
     tarifa: tarifa
   }
-  const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
-  registros.push(registro) 
-  localStorage.setItem('vehicleRecords', JSON.stringify(registros)) 
-  alert('Entrada registrada exitosamente') 
+  
 }
 
 function insertTypesToSelect() {
@@ -131,24 +128,6 @@ function cargarRegistros() {
     tablaRegistros.appendChild(fila)
   })
 }
-
-const btnRegistrar = document.getElementById('btn-vehicle')
-if (btnRegistrar) {
-  btnRegistrar.addEventListener('click', event => {
-    event.preventDefault()
-    const p = document.getElementById('message')
-    if (p) {
-      p.style = 'margin-top: 1rem'
-      p.textContent = 'Registrando vehículo por favor espere ...'
-    }
-    setTimeout(() => {
-      registrarEntrada()
-      if (p) p.textContent = ''
-      cargarRegistros()
-    }, 3000)
-  })
-}
-
 
 
 function obtenerTipos() {
@@ -205,13 +184,16 @@ function registerTypeVehicle() {
   }) 
 }
 
-const submitType = document.getElementById('btn-type') 
+const submitType = document.getElementById('register-vehicle-type') 
 if (submitType) {
-  submitType.addEventListener('click', event => {
+  submitType.addEventListener('submit', event => {
     event.preventDefault() 
+
     const p = document.getElementById('message') 
-    p.style = 'margin-top: 1rem' 
-    p.textContent = 'Registrando tipo de vehículo por favor espere ...' 
+    if(p){
+      p.style = 'margin-top: 1rem' 
+      p.textContent = 'Registrando tipo de vehículo por favor espere ...' 
+    }
     setTimeout(() => {
       registerTypeVehicle() 
       alert('Tipo de vehículo registrado exitosamente') 
@@ -219,6 +201,24 @@ if (submitType) {
       cargarTipos() 
     }, 3000) 
   }) 
+}
+
+const formRegistrar = document.getElementById('register-vehicle');
+if (formRegistrar) {
+  formRegistrar.addEventListener('submit', event => {
+    event.preventDefault(); // Ahora sí detendrá el envío del formulario correctamente
+    
+    const p = document.getElementById('message');
+    if (p) {
+      p.style = 'margin-top: 1rem';
+      p.textContent = 'Registrando vehículo por favor espere ...';
+    }
+    setTimeout(() => {
+      registrarEntrada();
+      if (p) p.textContent = '';
+      cargarRegistros();
+    }, 3000);
+  });
 }
 
 cargarTipos() 

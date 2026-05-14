@@ -32,19 +32,24 @@ function logIn(user, password) {
   }
 }
 
-const submit = document.getElementById('btn-type') 
-submit.addEventListener('click', () => {
-  const user = document.getElementById('email').value 
-  const pwd = document.getElementById('password').value 
-  const p = document.getElementById('messege') 
-  p.style = 'margin-top: 1rem' 
-  p.textContent = 'Validando información por favor espere ...' 
+const submit = document.getElementById('btn-login') 
+if (submit) {
+  submit.addEventListener('click', () => {
+    const user = document.getElementById('email').value 
+    const pwd = document.getElementById('password').value 
+    const p = document.getElementById('messege') 
+    if (p) {
+      p.style = 'margin-top: 1rem' 
+      p.textContent = 'Validando información por favor espere ...' 
+    }
 
-  setTimeout(() => {
-    logIn(user, pwd) 
-    p.textContent = ''
+    setTimeout(() => {
+      logIn(user, pwd) 
+      if (p) p.textContent = ''
     }, 3000)
   })
+}
+
 
 function obtenerHoraActual() {
   const ahora = new Date() 
@@ -59,6 +64,93 @@ function obtenerHoraActual() {
   return `${horasStr}:${minutos} ${ampm}` 
 }
 
+function formatearFecha(fecha) {
+  const dia = String(fecha.getDate()).padStart(2, '0')
+  const mes = String(fecha.getMonth() + 1).padStart(2, '0')
+  const anio = fecha.getFullYear()
+  return `${dia}/${mes}/${anio}`
+}
+
+function registrarEntrada() {
+  const placa = document.getElementById('placa').value.trim() 
+  const tipo = document.getElementById('tipo').value 
+  const slot = document.getElementById('slot').value.trim() 
+  const horaEntrada = obtenerHoraActual()
+  const fecha = formatearFecha(new Date())
+  const tipoSeleccionado = obtenerTipos().find(t => t.codigo === tipo)
+  const tipoNombre = tipoSeleccionado ? tipoSeleccionado.nombre : tipo
+  const tarifa = tipoSeleccionado ? tipoSeleccionado.tarifa : 'Q0'
+  const registro = {
+    placa: placa,
+    tipo: tipoNombre,
+    fecha: fecha,
+    horaEntrada: horaEntrada,
+    slot: slot,
+    tarifa: tarifa
+  }
+  const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+  registros.push(registro) 
+  localStorage.setItem('vehicleRecords', JSON.stringify(registros)) 
+  alert('Entrada registrada exitosamente') 
+}
+
+function insertTypesToSelect() {
+  const selectTipo = document.getElementById('tipo') 
+  if (!selectTipo) return
+
+  const tipos = obtenerTipos() 
+  tipos.forEach(tipo => {
+    const option = document.createElement('option') 
+    option.value = tipo.codigo
+    option.textContent = tipo.nombre
+    selectTipo.appendChild(option) 
+  }) 
+}
+
+insertTypesToSelect()
+
+function cargarRegistros() {
+  const tablaRegistros = document.getElementById('tabla-registros') 
+  if (!tablaRegistros) return
+  const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+  tablaRegistros.innerHTML = ''
+  if (registros.length === 0) {
+    tablaRegistros.innerHTML = '<tr><td colspan="6">No hay registros de vehículos.</td></tr>'
+    return
+  }
+  registros.forEach(registro => {
+    const fila = document.createElement('tr')
+    fila.innerHTML = `
+      <td>${registro.placa}</td>
+      <td>${registro.tipo}</td>
+      <td>${registro.fecha}</td>
+      <td>${registro.horaEntrada}</td>
+      <td>${registro.slot}</td>
+      <td>${registro.tarifa}</td>
+    `
+    tablaRegistros.appendChild(fila)
+  })
+}
+
+const btnRegistrar = document.getElementById('btn-vehicle')
+if (btnRegistrar) {
+  btnRegistrar.addEventListener('click', event => {
+    event.preventDefault()
+    const p = document.getElementById('message')
+    if (p) {
+      p.style = 'margin-top: 1rem'
+      p.textContent = 'Registrando vehículo por favor espere ...'
+    }
+    setTimeout(() => {
+      registrarEntrada()
+      if (p) p.textContent = ''
+      cargarRegistros()
+    }, 3000)
+  })
+}
+
+
+
 function obtenerTipos() {
   const datos = localStorage.getItem('vehicleTypes') 
   return datos ? JSON.parse(datos) : [] 
@@ -66,6 +158,11 @@ function obtenerTipos() {
 
 function guardarTipo(tipo) {
   const tipos = obtenerTipos() 
+  const codigosUnicos = new Set(tipos.map(t => t.codigo))
+  if (codigosUnicos.has(tipo.codigo)) {
+    alert('Código ya registrado')
+    return
+  }
   tipos.push(tipo) 
   localStorage.setItem('vehicleTypes', JSON.stringify(tipos)) 
 }
@@ -75,20 +172,22 @@ function cargarTipos() {
   if (!tablaTipos) return 
 
   const tipos = obtenerTipos() 
+  const codigosUnicos = [...new Set(tipos.map(t => t.codigo))]
+  const tiposUnicos = codigosUnicos.map(codigo => tipos.find(t => t.codigo === codigo))
+
   tablaTipos.innerHTML = '' 
 
-  if (tipos.length === 0) {
-    tablaTipos.innerHTML = '<tr><td colspan="4">No hay tipos de vehículo registrados.</td></tr>' 
+  if (tiposUnicos.length === 0) {
+    tablaTipos.innerHTML = '<tr><td colspan="3">No hay tipos de vehículo registrados.</td></tr>' 
     return 
   }
 
-  tipos.forEach(tipo => {
+  tiposUnicos.forEach(tipo => {
     const fila = document.createElement('tr') 
     fila.innerHTML = `
       <td>${tipo.codigo}</td>
       <td>${tipo.nombre}</td>
       <td>${tipo.tarifa}</td>
-      <td>${tipo.hora}</td>
     ` 
     tablaTipos.appendChild(fila) 
   }) 
@@ -98,13 +197,11 @@ function registerTypeVehicle() {
   const cod = document.getElementById('code').value.trim() 
   const name = document.getElementById('nombre').value.trim() 
   const tarifa = document.getElementById('precio').value.trim() 
-  const currentHour = obtenerHoraActual() 
 
   guardarTipo({
     codigo: cod,
     nombre: name,
-    tarifa: tarifa,
-    hora: currentHour
+    tarifa: tarifa
   }) 
 }
 
@@ -125,3 +222,4 @@ if (submitType) {
 }
 
 cargarTipos() 
+cargarRegistros() 

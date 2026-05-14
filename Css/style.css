@@ -318,10 +318,10 @@ form button:hover {
   overflow-x: auto;     
 }
 table {
-  width: 100%;           /* Ocupa todo el espacio interno del contenedor */
+  width: 100%;           
   border-collapse: collapse;
   font-family: var(--fuente-primaria);
-  text-align: left;      /* Mantiene los textos alineados ordenadamente */
+  text-align: center;    
 }
 th {
   background-color: var(--navy);

@@ -81,6 +81,7 @@ function registrarEntrada() {
   const tipoNombre = tipoSeleccionado ? tipoSeleccionado.nombre : tipo
   const tarifa = tipoSeleccionado ? tipoSeleccionado.tarifa : 'Q0'
   const registro = {
+    id: Date.now(),
     placa: placa,
     tipo: tipoNombre,
     fecha: fecha,
@@ -88,7 +89,10 @@ function registrarEntrada() {
     slot: slot,
     tarifa: tarifa
   }
-  
+
+  const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+  registros.push(registro)
+  localStorage.setItem('vehicleRecords', JSON.stringify(registros))
 }
 
 function insertTypesToSelect() {
@@ -118,14 +122,15 @@ function cargarRegistros() {
   registros.forEach(registro => {
     const fila = document.createElement('tr')
     fila.innerHTML = `
-      <td>${registro.placa}</td>
-      <td>${registro.tipo}</td>
-      <td>${registro.fecha}</td>
-      <td>${registro.horaEntrada}</td>
-      <td>${registro.slot}</td>
-      <td>${registro.tarifa}</td>
+      <td data-label="Placa">${registro.placa}</td>
+      <td data-label="Tipo">${registro.tipo}</td>
+      <td data-label="Fecha">${registro.fecha}</td>
+      <td data-label="Hora">${registro.horaEntrada}</td>
+      <td data-label="Slot">${registro.slot}</td>
+      <td data-label="Tarifa">${registro.tarifa}</td>
     `
     tablaRegistros.appendChild(fila)
+    recordManager.agregarBotonesFila(registro, fila)
   })
 }
 
@@ -157,18 +162,19 @@ function cargarTipos() {
   tablaTipos.innerHTML = '' 
 
   if (tiposUnicos.length === 0) {
-    tablaTipos.innerHTML = '<tr><td colspan="3">No hay tipos de vehículo registrados.</td></tr>' 
+    tablaTipos.innerHTML = '<tr><td colspan="4">No hay tipos de vehículo registrados.</td></tr>' 
     return 
   }
 
   tiposUnicos.forEach(tipo => {
     const fila = document.createElement('tr') 
     fila.innerHTML = `
-      <td>${tipo.codigo}</td>
-      <td>${tipo.nombre}</td>
-      <td>${tipo.tarifa}</td>
+      <td data-label="Código">${tipo.codigo}</td>
+      <td data-label="Nombre">${tipo.nombre}</td>
+      <td data-label="Tarifa">${tipo.tarifa}</td>
     ` 
-    tablaTipos.appendChild(fila) 
+    tablaTipos.appendChild(fila)
+    typeManager.agregarBotonesFila(tipo, fila) 
   }) 
 }
 
@@ -206,7 +212,7 @@ if (submitType) {
 const formRegistrar = document.getElementById('register-vehicle');
 if (formRegistrar) {
   formRegistrar.addEventListener('submit', event => {
-    event.preventDefault(); // Ahora sí detendrá el envío del formulario correctamente
+    event.preventDefault(); 
     
     const p = document.getElementById('message');
     if (p) {
@@ -223,3 +229,17 @@ if (formRegistrar) {
 
 cargarTipos() 
 cargarRegistros() 
+
+/* Menu Hamburguesa Mobile */
+const menuToggle = document.getElementById('menu-toggle')
+const navbarMenu = document.getElementById('navbar-menu')
+if (menuToggle) {
+  menuToggle.addEventListener('click', () => {
+    navbarMenu.classList.toggle('active')
+  })
+  document.querySelectorAll('.navbar a').forEach(link => {
+    link.addEventListener('click', () => {
+      navbarMenu.classList.remove('active')
+    })
+  })
+}

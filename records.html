@@ -18,8 +18,9 @@
         <nav class="navbar">
             <div class="navbar-header">
                 <h3>Menu</h3>
+                <button class="menu-toggle" id="menu-toggle">☰</button>
             </div>
-            <ul>
+            <ul id="navbar-menu">
                 <li><a href="register-vehicle.html">Registrar Auto</a></li>
                 <li><a href="croquis.html">Croquis</a></li>
                 <li><a href="register-type.html">Registrar Tipo de Vehículo</a></li>
@@ -40,6 +41,7 @@
                         <th>Hora de Entrada</th>
                         <th>Slot (Espacio)</th>
                         <th>Tarifa</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <!-- JavaScript rellenará este contenedor -->
@@ -56,14 +58,16 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Tarifa por Hora</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
-                    <!-- JavaScript rellenará este contenedor -->
                     <tbody id="tabla-tipos"></tbody>
                 </table>
             </div>
         </section>
     </main>
+    <script src="JS/recordManager.js"></script>
+    <script src="JS/typeManager.js"></script>
     <script src="JS/script.js"></script>
 </body>
 </html>

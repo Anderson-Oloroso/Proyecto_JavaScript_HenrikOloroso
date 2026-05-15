@@ -430,12 +430,22 @@
     padding: 1rem;
   }
 
-  .navbar {
-    width: 220px;
-  }
-
   .menu-toggle {
     display: none;
+  }
+
+  .navbar {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+
+  .navbar-header {
+    padding: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
   }
 
   .navbar ul {
@@ -443,8 +453,17 @@
     flex-direction: column;
   }
 
+  .navbar li {
+    margin: 5px 0;
+  }
+
   .navbar a {
     padding: 12px 15px;
+    border-left: 4px solid transparent;
+  }
+
+  .navbar a:hover {
+    border-left-color: var(--borde-frio);
   }
 
   .croquis {
@@ -503,16 +522,44 @@
     display: none;
   }
 
+  .navbar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+  }
+
+  .navbar-header {
+    padding: 0 20px 30px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+  }
+
   .navbar ul {
     display: flex !important;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar li {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  .navbar a {
+    display: block;
+    padding: 15px 20px;
+    border-left: 4px solid transparent;
+  }
+
+  .navbar a:hover {
+    border-left-color: var(--borde-frio);
   }
 
   header {
     height: 9rem;
-  }
-
-  .navbar {
-    width: 250px;
   }
 
   .croquis {
@@ -566,8 +613,40 @@
     display: none;
   }
 
+  .navbar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+  }
+
+  .navbar-header {
+    padding: 0 20px 30px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+  }
+
   .navbar ul {
     display: flex !important;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar li {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  .navbar a {
+    display: block;
+    padding: 15px 20px;
+    border-left: 4px solid transparent;
+  }
+
+  .navbar a:hover {
+    border-left-color: var(--borde-frio);
   }
 
   .table-container {

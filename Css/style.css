@@ -191,10 +191,12 @@ main button{
   color: var(--texto-principal);
   box-shadow: 0px 0px 10px white;
 }
+
 main button a{
   font-size: var(--texto-lg);
   color: var(--texto-principal);
   text-decoration: none;
+
     
 }
 main button:hover{

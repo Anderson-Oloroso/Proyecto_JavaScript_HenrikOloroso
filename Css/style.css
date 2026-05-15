@@ -299,14 +299,52 @@ form button:hover {
   align-items: center;
   justify-content: center;
 }
-.record-vehicles, .record-types{
+.record-vehicles, .record-types, .slots{
   width: calc(100% - 300px); 
   margin-left: 5rem;      
   margin-right: auto;
   height: auto;
   display: flex;
   flex-flow: column wrap;
+  justify-content: space-evenly;
+  align-items: center;
 }
+
+.slots{
+  flex-flow: row wrap;
+}
+
+.slots h2{
+  width:100%;
+  margin-bottom: 1rem;
+}
+
+.slots div{
+  width: 15%;
+  height: 5rem;
+  align-items: stretch;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.slots div strong{
+  font-size: 2rem;
+}
+
+#occuped-slot{
+  background-color:#0369a1;
+}
+#free-slot{
+  background-color: #8B1E3F;
+}
+
+.all-slots{
+  background-color: #059669;
+}
+
 .table-container {
   width: 80%;            
   max-width: 1400px; 
@@ -381,7 +419,6 @@ tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* ESTILOS PARA MODALES Y ACCIONES */
 .modal {
   display: none;
   position: fixed;
@@ -538,7 +575,6 @@ tbody tr:last-child td {
   padding: 0.5rem 1rem;
 }
 
-/* ESTILOS DEL FORMULARIO DE EDICIÓN */
 .modal-edicion {
   max-width: 600px;
 }

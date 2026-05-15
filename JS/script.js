@@ -50,6 +50,25 @@ if (submit) {
   })
 }
 
+function mostrarCantidadSlots(){
+  const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+  let cant = 0
+  console.log(registros)
+  registros.forEach(e =>{
+    console.log(e.slot)
+    if(e.slot){
+      cant += 1
+    }
+  })
+  console.log("Total", cant)
+  let slotLibre = 50 - cant
+  let slotOcupado = cant
+
+  const libre = document.getElementById("free")
+  libre.textContent = slotLibre.toString()
+  const ocupado = document.getElementById("occuped")
+  ocupado.textContent = slotOcupado.toString()
+}
 
 function obtenerHoraActual() {
   const ahora = new Date() 
@@ -229,8 +248,8 @@ if (formRegistrar) {
 
 cargarTipos() 
 cargarRegistros() 
+mostrarCantidadSlots()
 
-/* Menu Hamburguesa Mobile */
 const menuToggle = document.getElementById('menu-toggle')
 const navbarMenu = document.getElementById('navbar-menu')
 if (menuToggle) {

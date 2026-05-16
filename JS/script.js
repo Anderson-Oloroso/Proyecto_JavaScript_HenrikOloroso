@@ -249,16 +249,3 @@ if (formRegistrar) {
 cargarTipos() 
 cargarRegistros() 
 mostrarCantidadSlots()
-
-const menuToggle = document.getElementById('menu-toggle')
-const navbarMenu = document.getElementById('navbar-menu')
-if (menuToggle) {
-  menuToggle.addEventListener('click', () => {
-    navbarMenu.classList.toggle('active')
-  })
-  document.querySelectorAll('.navbar a').forEach(link => {
-    link.addEventListener('click', () => {
-      navbarMenu.classList.remove('active')
-    })
-  })
-}

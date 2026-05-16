@@ -17,6 +17,7 @@ class RecordManager {
         <div class="modal-body">
           <div class="modal-acciones">
             <button id="btn-editar" class="btn-accion btn-editar">✏️ Editar</button>
+            <button id="btn-tarifa" class="btn-accion btn-tarifa">💵 Salida</button>
             <button id="btn-eliminar" class="btn-accion btn-eliminar">🗑️ Eliminar</button>
             <button id="btn-cancelar" class="btn-accion btn-cancelar">Cancelar</button>
           </div>
@@ -107,6 +108,7 @@ class RecordManager {
     modal.style.display = 'flex'
 
     modal.querySelector('#btn-editar').onclick = () => this.abrirEdicion(registro)
+    modal.querySelector('#btn-tarifa').onclick = () => this.registrarSalida(registro)
     modal.querySelector('#btn-eliminar').onclick = () => this.eliminarRegistro(registro)
   }
 
@@ -173,6 +175,80 @@ class RecordManager {
     horas = horas % 12
     horas = horas ? horas : 12
     return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')} ${ampm}`
+  }
+
+  calcularTarifa(registro) {
+    const horaEntrada = this.convertirAMinutos(registro.horaEntrada)
+    const ahora = new Date()
+    let horas = ahora.getHours()
+    const minutos = ahora.getMinutes()
+    const ampm = horas >= 12 ? 'PM' : 'AM'
+    horas = horas % 12
+    horas = horas ? horas : 12
+    const horaActualFormato = `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')} ${ampm}`
+    const horaActualMinutos = this.convertirAMinutos(horaActualFormato)
+
+    let minutosTranscurridos = horaActualMinutos - horaEntrada
+    if (minutosTranscurridos < 0) {
+      minutosTranscurridos += 24 * 60
+    }
+
+    const horasTranscurridas = Math.ceil(minutosTranscurridos / 60)
+    const tarifaHora = this.extraerNumeroTarifa(registro.tarifa)
+    const tarifaTotal = horasTranscurridas * tarifaHora
+
+    return {
+      horasTranscurridas,
+      tarifaHora,
+      tarifaTotal,
+      horaActual: horaActualFormato
+    }
+  }
+
+  convertirAMinutos(horaAMPM) {
+    const partes = horaAMPM.split(' ')
+    let [horas, minutos] = partes[0].split(':').map(Number)
+    const ampm = partes[1] || 'AM'
+
+    if (ampm === 'PM' && horas !== 12) horas += 12
+    if (ampm === 'AM' && horas === 12) horas = 0
+
+    return horas * 60 + minutos
+  }
+
+  extraerNumeroTarifa(tarifa) {
+    const numero = tarifa.replace(/[^\d.]/g, '')
+    return parseFloat(numero) || 0
+  }
+
+  registrarSalida(registro) {
+    const tarifa = this.calcularTarifa(registro)
+    const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+    const indice = registros.findIndex(r => r.id === registro.id)
+
+    if (indice !== -1) {
+      registros.splice(indice, 1)
+      localStorage.setItem('vehicleRecords', JSON.stringify(registros))
+    }
+
+    const slotLimpios = JSON.parse(localStorage.getItem('slotsLimpios')) || []
+    if (!slotLimpios.includes(registro.slot)) {
+      slotLimpios.push(registro.slot)
+    }
+    localStorage.setItem('slotsLimpios', JSON.stringify(slotLimpios))
+
+    this.cerrarModal()
+    cargarRegistros()
+
+    alert(
+      `✅ SALIDA REGISTRADA\n\n` +
+      `Placa: ${registro.placa}\n` +
+      `Entrada: ${registro.horaEntrada}\n` +
+      `Salida: ${tarifa.horaActual}\n` +
+      `Tiempo: ${tarifa.horasTranscurridas} hora(s)\n` +
+      `Tarifa por hora: Q${tarifa.tarifaHora}\n` +
+      `Total a pagar: Q${tarifa.tarifaTotal}`
+    )
   }
 
   eliminarRegistro(registro) {

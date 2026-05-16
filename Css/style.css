@@ -67,11 +67,9 @@ body{
   display: flex;
   background-color:var(--bg-color);
   color: var(--paper);
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  flex-flow: column wrap;
-  overflow-x: hidden;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 header{
   width: 100%;
@@ -281,26 +279,6 @@ form button:hover {
   box-shadow: none;
   padding: 3rem 2rem 3rem 2rem;
 }
-
-.croquis{
-  flex-grow: 1;
-  width: calc(100% - 250px);
-  height: auto;
-  display: flex;
-  gap: 1rem;
-  flex-flow: row wrap;
-  margin: 3rem 3rem 3rem 0;
-  margin-left: 250px;
-}
-
-.croquis div{
-  width: 14.5rem;
-  height: 10rem;
-  background-color: #667eea;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .record-vehicles, .record-types, .slots{
   width: calc(100% - 300px); 
   margin-left: 5rem;      
@@ -313,11 +291,12 @@ form button:hover {
 }
 
 .slots{
+  width: 80%;
   flex-flow: row wrap;
 }
 
 .slots h2{
-  width:100%;
+  width:80%;
   margin-bottom: 1rem;
 }
 
@@ -527,6 +506,17 @@ tbody tr:last-child td {
   background-color: #0284c7;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(3, 105, 161, 0.3);
+}
+
+.btn-tarifa {
+  background-color: #059669;
+  color: var(--texto-principal);
+}
+
+.btn-tarifa:hover {
+  background-color: #10b981;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
 }
 
 .btn-eliminar {

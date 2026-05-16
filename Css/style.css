@@ -337,7 +337,7 @@ form button:hover {
   box-shadow: none;
   padding: 3rem 2rem 3rem 2rem;
 }
-.record-vehicles, .record-types, .slots{
+.record-vehicles, .record-types{
   width: calc(100% - 300px); 
   margin-left: 5rem;      
   margin-right: auto;
@@ -350,8 +350,8 @@ form button:hover {
 
 .slots{
   width: calc(100% - 300px);
+  display: flex;
   flex-flow: row wrap;
-  margin: 0;
   justify-content: center;
   align-items: center;
 }

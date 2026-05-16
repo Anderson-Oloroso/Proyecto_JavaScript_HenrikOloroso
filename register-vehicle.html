@@ -32,7 +32,7 @@
             <h2>Registrar Auto</h2>
             
             <label for="placa">Placa del Vehículo</label>
-            <input type="text" id="placa" name="placa" placeholder="Ej:B459YFG" required>
+            <input type="text" id="placa" name="placa" placeholder="Ej:B459YFG" required style="text-transform: uppercase;">
             
             <label for="tipo">Tipo de Vehículo</label>
             <select id="tipo" name="tipo" required>
@@ -40,7 +40,7 @@
             </select>
             
             <label for="slot">Slot (Espacio Asignado)</label>
-            <input type="number" id="slot" name="slot" placeholder="01" step="1" min="1" maxlength="2" required>
+            <input type="number" id="slot" name="slot" placeholder="01" step="1" min="1" max="50" required>
             
             <button type="submit" id="btn-vehicle">Registrar</button>
         </form>

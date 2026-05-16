@@ -110,8 +110,24 @@ function registrarEntrada() {
   }
 
   const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
-  registros.push(registro)
-  localStorage.setItem('vehicleRecords', JSON.stringify(registros))
+  const placaExistente = registros.some(r => r.placa === placa)
+
+  if (placaExistente) {
+    alert('⚠️ Error: La placa ' + placa + ' ya está registrada en el sistema.')
+    return
+  }
+
+  const codigosUnicos = registros.some(s => s.slot === slot)
+  if(codigosUnicos){
+    alert('⚠️ Error: El slot ' + slot + ' ya está registrado en el sistema.')
+    return
+  }else{
+    registros.push(registro)
+    localStorage.setItem('vehicleRecords', JSON.stringify(registros))
+    alert('✓ Vehículo registrado exitosamente')
+    document.getElementById('register-vehicle').reset()
+  }
+  
 }
 
 function insertTypesToSelect() {

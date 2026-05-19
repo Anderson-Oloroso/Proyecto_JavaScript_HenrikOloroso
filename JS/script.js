@@ -13,24 +13,23 @@ const usuario = {
   name_: 'admin',
   email_: 'admin@tufavorito.com',
   password_: 'Admin_159'
-} 
+}
 
-localStorage.setItem('usuario', JSON.stringify(usuario)) 
 
 function logIn(user, password) {
-  const userCredentials = JSON.parse(localStorage.getItem('usuario')) 
-
-  if (user === userCredentials.email_ && password === userCredentials.password_) {
-    alert('¡Bienvenido ' + userCredentials.name_ + '!') 
-    window.location.href = 'records.html' 
-  } else if (user === userCredentials.email_ && password !== userCredentials.password_) {
-    alert('Estimado usuario, tu contraseña es incorrecta') 
-  } else if (user !== userCredentials.email_) {
-    alert('Usuario inexistente') 
+  if (user === usuario.email_ && password === usuario.password_) {
+    alert('¡Bienvenido ' + usuario.name_ + '!') 
+    localStorage.setItem('usuario', JSON.stringify(usuario)) 
+    window.location.href = 'records.html' 
+  } else if (user === usuario.email_ && password !== usuario.password_) {
+    alert('Estimado usuario, tu contraseña es incorrecta') 
+  } else if (user !== usuario.email_) {
+    alert('Usuario inexistente') 
   } else {
-    alert('Credenciales incorrectas') 
+    alert('Credenciales incorrectas') 
   }
 }
+
 
 const submit = document.getElementById('btn-login') 
 if (submit) {
@@ -44,9 +43,9 @@ if (submit) {
     }
 
     setTimeout(() => {
-      logIn(user, pwd) 
+      logIn(user, pwd)
       if (p) p.textContent = ''
-    }, 3000)
+    }, 1000)
   })
 }
 
@@ -260,6 +259,15 @@ if (formRegistrar) {
       cargarRegistros();
     }, 3000);
   });
+}
+
+const logoutBtn = document.getElementById('log-out')
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    localStorage.removeItem('usuario')
+    window.location.href = 'index.html'
+  })
 }
 
 cargarTipos() 

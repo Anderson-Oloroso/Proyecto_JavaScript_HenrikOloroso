@@ -22,7 +22,7 @@
             <ul>
                 <li><a href="register-vehicle.html">Registrar Auto</a></li>
                 <li><a href="records.html">Historial y registros</a></li>
-                <li><a href="index.html">Cerrar Sesión</a></li>
+                <li><a id="log-out" href="index.html">Cerrar Sesión</a></li>
             </ul>
         </nav>
     </header>
@@ -44,6 +44,15 @@
         </form>
         <p id="message"></p>
     </main>
+    <script>
+        function validacion(){
+            const userCredentials = JSON.parse(localStorage.getItem('usuario'))
+            if(!userCredentials) {
+            window.location.href = 'index.html'
+            }
+        }
+        validacion()
+    </script>
     <script src="JS/script.js"></script>
 </body>
 </html>

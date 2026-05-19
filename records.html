@@ -23,7 +23,7 @@
             <ul id="navbar-menu">
                 <li><a href="register-vehicle.html">Registrar Auto</a></li>
                 <li><a href="register-type.html">Registrar Tipo de Vehículo</a></li>
-                <li><a href="index.html">Salir</a></li>
+                <li><a id="log-out" href="index.html">Salir</a></li>
             </ul>
         </nav>
     </header>
@@ -79,6 +79,15 @@
             </div>
         </section>
     </main>
+    <script>
+        function validacion(){
+            const userCredentials = JSON.parse(localStorage.getItem('usuario'))
+            if(!userCredentials) {
+            window.location.href = 'index.html'
+            }
+        }
+        validacion()
+    </script>
     <script src="JS/recordManager.js"></script>
     <script src="JS/typeManager.js"></script>
     <script src="JS/script.js"></script>

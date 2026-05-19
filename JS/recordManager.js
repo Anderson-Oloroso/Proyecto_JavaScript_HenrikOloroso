@@ -48,11 +48,11 @@ class RecordManager {
           <form id="form-edicion">
             <div class="form-group">
               <label for="edit-placa">Placa del Vehículo:</label>
-              <input type="text" id="edit-placa" required>
+              <input type="text" id="edit-placa" required maxlength="7" placeholder = "A123HFT">
             </div>
             <div class="form-group">
               <label for="edit-slot">Slot (Espacio):</label>
-              <input type="text" id="edit-slot" required>
+              <input type="text" id="edit-slot" required placeholder="1" step="1" min="1" max="50">
             </div>
             <div class="form-group">
               <label for="edit-tipo">Tipo de Vehículo:</label>
@@ -141,16 +141,39 @@ class RecordManager {
   guardarEdicion(e) {
     e.preventDefault()
 
-    const placa = document.getElementById('edit-placa').value
-    const slot = document.getElementById('edit-slot').value
+    const placa = document.getElementById('edit-placa').value.trim()
+    const slot = document.getElementById('edit-slot').value.trim()
     const codigoTipo = document.getElementById('edit-tipo').value
     const tarifa = document.getElementById('edit-tarifa').value
     const horaEntrada = document.getElementById('edit-horaEntrada').value
 
+    const formato = /^[A-Z]\d{3}[A-Z]{3}$/
+    if (!formato.test(placa)) {
+      alert("⚠️ Error: Formato de placa incorrecto")
+      return
+    }
+
+    const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+
+    const placaExistente = registros.some(r => 
+      r.placa === placa && r.id !== this.registroActual.id
+    )
+    if (placaExistente) {
+      alert('⚠️ Error: La placa ' + placa + ' ya está registrada en el sistema.')
+      return
+    }
+
+    const slotOcupado = registros.some(s => 
+      s.slot === slot && s.id !== this.registroActual.id
+    )
+    if (slotOcupado) {
+      alert('⚠️ Error: El slot ' + slot + ' ya está registrado en el sistema.')
+      return
+    }
+
     const tipoSeleccionado = obtenerTipos().find(t => t.codigo === codigoTipo)
     const nombreTipo = tipoSeleccionado ? tipoSeleccionado.nombre : codigoTipo
 
-    const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
     const indice = registros.findIndex(r => r.id === this.registroActual.id)
 
     if (indice !== -1) {
@@ -162,9 +185,11 @@ class RecordManager {
         tarifa: tarifa,
         horaEntrada: this.convertirAFormatoAMPM(horaEntrada)
       }
+      
       localStorage.setItem('vehicleRecords', JSON.stringify(registros))
       this.cerrarModalEdicion()
       cargarRegistros()
+      alert('✓ Registro actualizado exitosamente')
     }
   }
 
@@ -227,6 +252,8 @@ class RecordManager {
     const indice = registros.findIndex(r => r.id === registro.id)
 
     if (indice !== -1) {
+
+      guardarRegistroFacturado(registro, tarifa)
       registros.splice(indice, 1)
       localStorage.setItem('vehicleRecords', JSON.stringify(registros))
     }
@@ -284,3 +311,20 @@ class RecordManager {
 }
 
 const recordManager = new RecordManager()
+
+function guardarRegistroFacturado(registro, tarifa) {
+  const registrosFacturados = JSON.parse(localStorage.getItem('registrosFacturados')) || []
+  
+  const registroFacturado = {
+    ...registro,
+    horaEntrada: registro.horaEntrada,
+    horaSalida: tarifa.horaActual,
+    horasTranscurridas: tarifa.horasTranscurridas,
+    tarifaHora: tarifa.tarifaHora,
+    tarifaTotal: tarifa.tarifaTotal,
+    fechaFacturacion: formatearFecha(new Date())
+  }
+  
+  registrosFacturados.push(registroFacturado)
+  localStorage.setItem('registrosFacturados', JSON.stringify(registrosFacturados))
+}

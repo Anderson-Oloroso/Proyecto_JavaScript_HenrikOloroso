@@ -90,9 +90,9 @@ function formatearFecha(fecha) {
 }
 
 function registrarEntrada() {
-  const placa = document.getElementById('placa').value.trim() 
-  const tipo = document.getElementById('tipo').value 
-  const slot = document.getElementById('slot').value.trim() 
+  const placa = document.getElementById('placa').value.trim()
+  const tipo = document.getElementById('tipo').value.trim()
+  const slot = document.getElementById('slot').value.trim()
   const horaEntrada = obtenerHoraActual()
   const fecha = formatearFecha(new Date())
   const tipoSeleccionado = obtenerTipos().find(t => t.codigo === tipo)
@@ -106,6 +106,12 @@ function registrarEntrada() {
     horaEntrada: horaEntrada,
     slot: slot,
     tarifa: tarifa
+  }
+
+  const formato = /^[A-Z]\d{3}[A-Z]{3}$/
+  if(!formato.test(placa)){
+    alert("⚠️ Error: Formato de placa incorrecto")
+    return
   }
 
   const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
@@ -270,6 +276,37 @@ if (logoutBtn) {
   })
 }
 
+function cargarRegistrosFacturados() {
+  const tablaFacturas = document.getElementById('tabla-facturas')
+  if (!tablaFacturas) return
+
+  const registrosFacturados = JSON.parse(localStorage.getItem('registrosFacturados')) || []
+  tablaFacturas.innerHTML = ''
+
+  if (registrosFacturados.length === 0) {
+    tablaFacturas.innerHTML = '<tr><td colspan="9">No hay registros facturados.</td></tr>'
+    return
+  }
+
+  registrosFacturados.forEach(registro => {
+    const fila = document.createElement('tr')
+    fila.innerHTML = `
+      <td data-label="Placa">${registro.placa}</td>
+      <td data-label="Tipo">${registro.tipo}</td>
+      <td data-label="Slot">${registro.slot}</td>
+      <td data-label="Entrada">${registro.horaEntrada}</td>
+      <td data-label="Salida">${registro.horaSalida}</td>
+      <td data-label="Tiempo">${registro.horasTranscurridas} h</td>
+      <td data-label="Tarifa/h">Q${registro.tarifaHora}</td>
+      <td data-label="Total">Q${registro.tarifaTotal}</td>
+      <td data-label="Fecha">${registro.fechaFacturacion}</td>
+    `
+    tablaFacturas.appendChild(fila)
+  })
+}
+
+
 cargarTipos() 
 cargarRegistros() 
 mostrarCantidadSlots()
+cargarRegistrosFacturados()

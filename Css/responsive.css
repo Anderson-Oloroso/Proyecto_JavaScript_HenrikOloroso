@@ -144,18 +144,7 @@
     background-color: var(--slot-total);
   }
 
-  .croquis {
-    width: 100%;
-    margin: 1rem 0;
-    flex-direction: column;
-  }
-
-  .croquis div {
-    width: 100%;
-    height: 8rem;
-  }
-
-  .record-vehicles, .record-types {
+  .record-vehicles, .record-types,.record-facturas {
     width: 100%;
     margin-left: 0;
     margin-right: 0;

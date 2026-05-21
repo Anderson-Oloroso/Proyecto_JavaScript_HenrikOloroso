@@ -339,7 +339,7 @@ form button:hover {
   box-shadow: none;
   padding: 3rem 2rem 3rem 2rem;
 }
-.record-vehicles, .record-types, .record-facturas{
+.record-vehicles, .record-types, .record-facturas, .record-reportes{
   width: calc(100% - 300px); 
   margin-left: 5rem;      
   margin-right: auto;
@@ -350,6 +350,17 @@ form button:hover {
   align-items: center;
 }
 
+.filters, .text{
+  width:calc(100% - 300px);
+  height: auto;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30rem;
+  font-weight: bold;
+  color: white;
+}
 .slots{
   min-width: calc(100% - 300px);
   display: flex;

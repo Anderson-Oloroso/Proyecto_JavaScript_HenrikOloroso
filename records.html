@@ -99,6 +99,31 @@
                 </table>
             </div>
         </section>
+        <h2>Reportes</h2>
+        <section class="record-reportes">
+            <div class="text">
+                <p>Fecha inicial</p>
+                <p>Fecha Final</p>
+            </div>
+            <div class="filters">
+                <select name="_date" id="_date"></select>
+                <select name="date_" id="date_"></select>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre tipo de vehiculo</th>
+                            <th>Num. Vehiculos parqueados</th>
+                            <th>Tiempo Total de los servicios</th>
+                            <th>Total recaudado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-reportes"></tbody>
+                </table>
+            </div>
+        </section>
     </main>
     <script>
         function validacion(){

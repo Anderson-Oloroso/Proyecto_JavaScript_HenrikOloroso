@@ -306,7 +306,76 @@ function cargarRegistrosFacturados() {
 }
 
 
-cargarTipos() 
-cargarRegistros() 
+function cargarVehiculos(){
+  const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+  tablaRegistros.innerHTML = ''
+  let contrador = 0
+  registros.forEach(registro => {
+    console.log(registro.nombre)
+  })
+}
+
+function total_(){
+
+  const registrosFacturados = JSON.parse(localStorage.getItem('registrosFacturados')) || []
+  let total = 0
+  registrosFacturados.forEach(registro => {
+    total += registro.tarifaTotal
+  })
+  return total
+}
+
+function numeroVehiculosParqueados(){
+  const registros = JSON.parse(localStorage.getItem('vehicleRecords')) || []
+  let contador = 0
+  registros.forEach(registro => {
+    if(!registro.horaSalida){
+      contador += 1
+    }
+  })
+  return contador
+}
+
+function tiempoTotalServicios(){
+  const registrosFacturados = JSON.parse(localStorage.getItem('registrosFacturados')) || []
+  let totalHoras = 0
+  registrosFacturados.forEach(registro => {
+    totalHoras += registro.horasTranscurridas
+  })
+  return totalHoras
+}
+
+function cargarReportes() {
+  const tablaRepotes = document.getElementById('tabla-reportes') 
+  if (!tablaRepotes) return 
+
+  const tipos = obtenerTipos() 
+  const codigosUnicos = [...new Set(tipos.map(t => t.codigo))]
+  const tiposUnicos = codigosUnicos.map(codigo => tipos.find(t => t.codigo === codigo))
+
+  tablaRepotes.innerHTML = '' 
+
+  if (tiposUnicos.length === 0) {
+    tablaTipos.innerHTML = '<tr><td colspan="4">No hay tipos de vehículo registrados.</td></tr>' 
+    return 
+  }
+
+  tiposUnicos.forEach(tipo => {
+    const fila = document.createElement('tr') 
+    fila.innerHTML = `
+      <td data-label="Código">${tipo.codigo}</td>
+      <td data-label="Nombre">${tipo.nombre}</td>
+      <td data-label="Tarifa">${tiempoTotalServicios()}</td>
+      <td data-label="Cantidad">${numeroVehiculosParqueados()}</td>
+      <td data-label="Tarifa">${total_()}</td>
+    ` 
+    tablaRepotes.appendChild(fila)
+  }) 
+  
+}
+
+cargarTipos()
+cargarRegistros()
 mostrarCantidadSlots()
 cargarRegistrosFacturados()
+cargarReportes()
